@@ -968,6 +968,7 @@ async function startDownload(object, iidx) {
         headers: headers,
         taskName: taskName,
         myKeyIV: myKeyIV,
+        taskIsAutoMerge: object.taskIsAutoMerge,
         taskIsDelTs: taskIsDelTs,
         success: true,
         videopath: ''
@@ -1021,8 +1022,6 @@ async function startDownload(object, iidx) {
         }
 
         logger.info('download success');
-        video.status = "已完成，合并中...";
-        mainWindow.webContents.send('task-notify-end', video);
         let fileSegments = [];
         for (let iSeg = 0; iSeg < segments.length; iSeg++) {
             let filpath = path.join(dir, `${((iSeg + 1) + '').padStart(6, '0')}.ts`);
@@ -1036,6 +1035,14 @@ async function startDownload(object, iidx) {
             logger.error(`[${url}] 下载失败，请检查链接有效性`);
             return;
         }
+        video.status = video.taskIsAutoMerge ? "已完成，合并中..." : '已完成';
+        mainWindow.webContents.send('task-notify-end', video);
+
+        // 不自动合并
+        if (!video.taskIsAutoMerge) {
+            return;
+        }
+
         let outPathMP4 = path.join(dir, Date.now() + ".mp4");
         let outPathMP4_ = path.join(pathDownloadDir, filenamify(taskName.trim(), { replacement: '_' }) + '.mp4');
         if (fs.existsSync(ffmpegPath)) {

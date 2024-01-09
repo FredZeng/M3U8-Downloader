@@ -20,6 +20,7 @@ const _app = new Vue({
             myKeyIV:'',
             myLocalKeyIV:'',
             taskName:'',
+            taskIsAutoMerge: true,
             taskIsDelTs:true,
             allVideos:[],
             tabPane:'',
@@ -215,6 +216,7 @@ const _app = new Vue({
                      headers: this.headers,
                      myKeyIV: this.myKeyIV,
                      taskName: this.taskName,
+                     taskIsAutoMerge: this.taskIsAutoMerge,
                      taskIsDelTs:this.taskIsDelTs,
                      url_prefix:this.m3u8_url_prefix
                 });

@@ -148,6 +148,9 @@
                                                     </el-input>
                                                 </el-tooltip>
                                             </el-form-item>
+                                            <el-form-item label="自动合并" label-position="right">
+                                                <el-checkbox v-model="taskIsAutoMerge" label="下载完成后自动合并"></el-checkbox>
+                                            </el-form-item>
                                             <el-form-item label="合并完成" label-position="right">
                                                 <el-checkbox v-model="taskIsDelTs" label="删除TS片段"></el-checkbox>
                                             </el-form-item>
